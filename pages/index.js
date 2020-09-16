@@ -1,24 +1,49 @@
-import React from "react";
+import React, { useState, useContext, useEffect } from "react";
 import Layout from "../components/layout/Layout";
-/* import styled from "@emotion/styled";
+import DetallesProducto from "../components/layout/DetallesProducto";
+import { FirebaseContext } from "../firebase";
 
+const Home = () => {
+  const [productos, guardarProductos] = useState([]);
 
-const Heading = styled.h1`
-  color: red;
-`; */
+  const { firebase } = useContext(FirebaseContext);
 
-const Home = () => (
-  <div>
-    <Layout>
-      <h1>Inicio</h1>
-    </Layout>
+  useEffect(() => {
+    const obtenerProductos = () => {
+      firebase.db
+        .collection("productos")
+        .orderBy("creado", "desc")
+        .onSnapshot(manejarSnapshot);
+    };
+    obtenerProductos();
+  }, []);
 
-    {/*     <style jsx>{`
-      h1 {
-        color: red;
-      }
-    `}</style> */}
-  </div>
-);
+  function manejarSnapshot(snapshot) {
+    const productos = snapshot.docs.map((doc) => {
+      return {
+        id: doc.id,
+        ...doc.data(),
+      };
+    });
+
+    guardarProductos(productos);
+  }
+
+  return (
+    <div>
+      <Layout>
+        <div className="listado-productos">
+          <div className="contenedor">
+            <ul className="bg-white">
+              {productos.map((producto) => (
+                <DetallesProducto key={producto.id} producto={producto} />
+              ))}
+            </ul>
+          </div>
+        </div>
+      </Layout>
+    </div>
+  );
+};
 
 export default Home;
