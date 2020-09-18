@@ -1,6 +1,9 @@
 import styled from "@emotion/styled";
 
 const Boton = styled.a`
+  display: block;
+  margin: 2 rem auto;
+  text-align: center;
   font-weight: 700;
   text-transform: uppercase;
   border: 1px solid #d1d1d1;
