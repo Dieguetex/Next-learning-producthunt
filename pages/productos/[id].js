@@ -48,28 +48,34 @@ const Producto = () => {
   const { firebase, usuario } = useContext(FirebaseContext);
 
   useEffect(() => {
+    //Declaramos variable para trackear si esta o no el componente montado
+    let isCancelled = false;
+
     if (id && consultarDB) {
       const obtenerProducto = async () => {
         const productoQuery = await firebase.db.collection("productos").doc(id);
         const producto = await productoQuery.get();
 
-        if (producto.exists) {
-          guardarProducto(producto.data());
-        } else {
-          guardarError(true);
+        if (!isCancelled) {
+          if (producto.exists) {
+            guardarProducto(producto.data());
+          } else {
+            guardarError(true);
+          }
+          guardarconsultarDB(false);
         }
-        guardarconsultarDB(false);
       };
       obtenerProducto();
     }
+    return () => {
+      //Volvemos la variable true para evitar que se intente actualizar un state inexistente
+      isCancelled = true;
+    };
   }, [id]);
-
-  console.log(producto);
 
   if (Object.keys(producto).length === 0 && !error) return "Cargando...";
 
   const {
-    /* id, */
     comentarios,
     creado,
     descripcion,
@@ -107,6 +113,7 @@ const Producto = () => {
     guardarProducto({
       ...producto,
       votos: nuevoTotal,
+      haVotado: nuevoHaVotado,
     });
 
     guardarconsultarDB(true); // Hay un voto, por lo tanto consultar a la BD

@@ -2,9 +2,9 @@
 
 ReactRouter has a convenience property on the `Link` element to allow an author to set the _active_ className on a link. This example replicates that functionality using Next's own `Link`.
 
-## Deploy your own
+## Deploy
 
-Deploy the example using [Vercel](https://vercel.com):
+You can see the deployment [here](https://product-hunt-b8cc2.web.app/):
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/vercel/next.js/tree/canary/examples/active-class-name)
 

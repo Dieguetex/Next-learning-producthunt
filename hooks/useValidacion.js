@@ -7,13 +7,13 @@ const useValidacion = (stateInicial, validar, fn) => {
 
   useEffect(() => {
     if (submitForm) {
+      guardarSubimitForm(false);
+
       const noErrores = Object.keys(errores).length === 0;
 
       if (noErrores) {
         fn(); // fn === Función que se ejecuta en el componente
       }
-
-      guardarSubimitForm(false);
     }
   }, [errores]);
 

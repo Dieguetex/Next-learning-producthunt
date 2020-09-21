@@ -51,8 +51,6 @@ const NuevoProducto = () => {
   // Context con las operaciones crud de firebase
   const { usuario, firebase } = useContext(FirebaseContext);
 
-  console.log("usuario", usuario);
-
   async function crearProducto() {
     // Si el usuario no está autenticado redirigir al login
     if (!usuario) {
@@ -77,9 +75,12 @@ const NuevoProducto = () => {
     };
 
     // Insertar producto en base de datos
-    firebase.db.collection("productos").add(producto);
-
-    return router.push("/");
+    await firebase.db
+      .collection("productos")
+      .add(producto)
+      .then(() => {
+        return router.push("/");
+      });
   }
 
   const handleUploadStart = () => {
