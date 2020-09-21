@@ -4,7 +4,7 @@ ReactRouter has a convenience property on the `Link` element to allow an author 
 
 ## Deploy
 
-You can see the deployment [here](https://product-hunt-b8cc2.web.app/):
+You can see the deployment [here](https://product-hunt-b8cc2.web.app/)
 
 ## How to use
 
